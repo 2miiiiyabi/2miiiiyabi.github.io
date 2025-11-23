@@ -1,411 +1,182 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>&TEAM — 介紹頁面</title>
-  <meta name="description" content="&TEAM（日本九人體制）粉絲/介紹頁，含成員、音樂、社群連結與簡單互動。">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>幸福手作餅乾工坊</title>
   <style>
-    /* 簡潔現代風格 CSS */
-    :root{
-      --bg:#0f1724;
-      --card:#0f172a;
-      --accent:#7dd3fc;
-      --muted:#9aa4b2;
-      --glass: rgba(255,255,255,0.04);
-      --maxw:1100px;
-      --radius:12px;
-      font-family: "Noto Sans TC", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      background: linear-gradient(180deg,#071020 0%, #081422 60%);
-      color:#e6eef6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-    }
-    .container{
-      max-width:var(--maxw);
-      margin:36px auto;
-      padding:24px;
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", sans-serif;
+      background: #fffdf7;
+      color: #4a3728;
     }
 
-    /* header / hero */
-    header.hero{
-      display:grid;
-      grid-template-columns: 1fr 360px;
-      gap:20px;
-      align-items:center;
-      margin-bottom:28px;
+    /* Header */
+    header {
+      background: #f3e5c3;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     }
-    header .lead{
-      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      padding:28px;
-      border-radius:var(--radius);
-      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
-    }
-    header h1{
-      margin:0 0 8px 0;
-      font-size:28px;
-      letter-spacing:1px;
-    }
-    header p.sub{
-      margin:0 0 12px 0;
-      color:var(--muted);
-    }
-    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{
-      display:inline-block;
-      background:var(--accent);
-      color:#071422;
-      padding:10px 14px;
-      border-radius:10px;
-      text-decoration:none;
-      font-weight:700;
-      box-shadow: 0 6px 14px rgba(34,197,94,0.06);
-    }
-    .ghost{
-      background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);
-      padding:10px 14px;border-radius:10px;text-decoration:none;
+    header h1 {
+      margin: 0;
+      font-size: 32px;
     }
 
-    .hero-art{
-      border-radius:var(--radius);
-      overflow:hidden;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 30px 20px;
     }
-    .hero-art img{width:100%;height:100%;object-fit:cover;display:block}
-
-    /* sections */
-    section{margin-bottom:26px}
-    h2{margin:0 0 14px 0;font-size:20px}
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-      gap:16px;
+    .hero img {
+      width: 280px;
+      max-width: 80%;
+    }
+    .hero p {
+      margin-top: 16px;
+      font-size: 18px;
     }
 
-    /* 成員卡 */
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:14px;
-      padding:12px;
-      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
-      transition:transform .18s ease, box-shadow .18s ease;
-      cursor:pointer;
+    /* Section title */
+    h2 {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 26px;
     }
-    .card:hover{ transform:translateY(-6px); box-shadow:0 18px 40px rgba(3,8,20,0.6)}
-    .thumb{
-      width:100%;
-      height:180px;
-      border-radius:10px;
-      overflow:hidden;
-      background:var(--glass);
-      margin-bottom:10px;
+
+    /* Product grid */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
     }
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .meta{
-      display:flex;justify-content:space-between;align-items:center;
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: 0.2s;
     }
-    .name{font-weight:700}
-    .role{color:var(--muted);font-size:13px}
-
-    /* 音樂列表 */
-    .music-list{display:flex;flex-direction:column;gap:10px}
-    .music-item{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,0.02);padding:10px;border-radius:10px}
-    .music-item img{width:84px;height:48px;object-fit:cover;border-radius:6px}
-
-    /* footer */
-    footer{color:var(--muted);font-size:13px;padding:18px 0;border-top:1px solid rgba(255,255,255,0.02)}
-
-    /* modal (簡單成員詳細) */
-    .modal{
-      position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:50;
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
-    .modal.open{display:flex}
-    .modal-card{width:92%;max-width:720px;background:#071426;border-radius:12px;padding:18px;color:#eaf6ff;box-shadow:0 30px 60px rgba(0,0,0,0.6)}
-    .modal-grid{display:grid;grid-template-columns:150px 1fr;gap:12px}
-    .modal img{width:100%;height:100%;object-fit:cover;border-radius:8px}
-    .close{background:transparent;border:0;color:var(--muted);font-weight:700;cursor:pointer}
+    .card img {
+      width: 160px;
+      height: 160px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+    .card h3 {
+      margin: 8px 0;
+    }
+    .price {
+      color: #e07a3f;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .buy-btn {
+      padding: 10px 16px;
+      background: #e0a25b;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      display: inline-block;
+      font-weight: bold;
+    }
+    .buy-btn:hover {
+      background: #cf8a3d;
+    }
 
-    /* small screens */
-    @media (max-width:880px){
-      header.hero{grid-template-columns:1fr}
-      .hero-art{height:220px}
-      .thumb{height:160px}
-      .modal-grid{grid-template-columns: 1fr}
+    /* Contact */
+    .contact {
+      text-align: center;
+      padding: 30px;
+      background: #f8f1df;
+      margin-top: 40px;
+    }
+    .contact p {
+      margin: 6px 0;
+      font-size: 18px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 18px 0;
+      color: #8a7c6f;
+      background: #f3e5c3;
+      margin-top: 20px;
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
 
-    <!-- HERO -->
-    <header class="hero" role="banner">
-      <div class="lead">
-        <h1>&TEAM — 日本男子團體介紹</h1>
-        <p class="sub">九人男子團體，於 2022 年透過選秀節目「&AUDITION - The Howling -」形成並出道。此頁為簡易粉絲／介紹頁範本，可直接編輯圖片與連結。</p>
+<header>
+  <h1>幸福手作餅乾工坊</h1>
+</header>
 
-        <div class="cta-row">
-          <a class="btn" href="https://www.andteam-official.jp/" target="_blank" rel="noopener">官方網站</a>
-          <a class="ghost" href="https://www.youtube.com/channel/UCHD1jo5RhijLfx5-0Ehe_cg" target="_blank" rel="noopener">官方 YouTube</a>
-          <a class="ghost" href="https://www.instagram.com/andteam_official/" target="_blank" rel="noopener">Instagram</a>
-        </div>
+<section class="hero">
+  <img src="https://illust8.com/wp-content/uploads/2021/02/cookie_plate_illust_1158.png" alt="手作餅乾">
+  <p>每天新鮮出爐的溫暖手作餅乾，用最天然的食材帶給你最純粹的幸福味道。</p>
+</section>
 
-        <p style="margin-top:12px;color:var(--muted);font-size:13px">
-          資料來源範例：維基百科、官方網站、新聞媒體（請依需求補齊與更新）。</p>
-      </div>
+<h2>熱銷商品</h2>
 
-      <div class="hero-art" aria-hidden="true">
-        <!-- 替換成官方或高解析圖片 -->
-        <img src="https://via.placeholder.com/720x420?text=%26TEAM+Hero+Image" alt="&TEAM 團體照（請替換為官方圖片）">
-      </div>
-    </header>
+<section class="products">
 
-    <!-- ABOUT -->
-    <section aria-labelledby="about">
-      <h2 id="about">關於 &TEAM</h2>
-      <p style="color:var(--muted);margin-top:6px">
-        &TEAM 為九人男子團體（成員：K、Fuma、Nicholas、EJ、Yuma、Jo、Harua、Taki、Maki），由 HYBE Labels Japan / YX LABELS 透過選秀節目選出並於 2022 年出道。以下為成員與作品展示（請將圖片網址替換為官方授權圖）。</p>
-      <p style="color:var(--muted);font-size:13px;margin-top:6px">（資訊參考：維基百科 / 官方網站 / 媒體報導）</p>
-    </section>
-
-    <!-- MEMBERS -->
-    <section aria-labelledby="members">
-      <h2 id="members">成員 Members</h2>
-      <div class="grid" id="membersGrid">
-        <!-- 每張卡內含 data-*，可由 JavaScript 注入 Modal 詳細資料 -->
-        <!-- 注意：下方圖片為 placeholder，請替換為官方圖檔 URL -->
-        <div class="card" data-name="K" data-role="隊長 / 主唱" data-desc="K（古賀祐大），隊內重要音樂製作參與者。">
-          <div class="thumb"><img src="https://via.placeholder.com/400x300?text=K" alt="K"></div>
-          <div class="meta">
-            <div>
-              <div class="name">K</div>
-              <div class="role">隊長 / 主唱</div>
-            </div>
-            <div style="font-size:12px;color:var(--muted)">點擊看詳情</div>
-          </div>
-        </div>
-
-        <div class="card" data-name="Fuma" data-role="主舞 / Rap" data-desc="Fuma（村田風雅），出色的舞蹈與表現力。">
-          <div class="thumb"><img src="https://via.placeholder.com/400x300?text=Fuma" alt="Fuma"></div>
-          <div class="meta">
-            <div>
-              <div class="name">Fuma</div>
-              <div class="role">主舞 / Rap</div>
-            </div>
-            <div style="font-size:12px;color:var(--muted)">點擊看詳情</div>
-          </div>
-        </div>
-
-        <div class="card" data-name="Nicholas" data-role="主 Rap / 舞台" data-desc="Nicholas（王奕翔），多語能力，擅長 Rap 與舞台魅力。">
-          <div class="thumb"><img src="https://via.placeholder.com/400x300?text=Nicholas" alt="Nicholas"></div>
-          <div class="meta">
-            <div>
-              <div class="name">Nicholas</div>
-              <div class="role">主 Rap</div>
-            </div>
-            <div style="font-size:12px;color:var(--muted)">點擊看詳情</div>
-          </div>
-        </div>
-
-        <div class="card" data-name="EJ" data-role="主唱 / 領導" data-desc="EJ，擅長情感表現，團內溝通協調角色。">
-          <div class="thumb"><img src="https://via.placeholder.com/400x300?text=EJ" alt="EJ"></div>
-          <div class="meta">
-            <div>
-              <div class="name">EJ</div>
-              <div class="role">主唱</div>
-            </div>
-            <div style="font-size:12px;color:var(--muted)">點擊看詳情</div>
-          </div>
-        </div>
-
-        <div class="card" data-name="Yuma" data-role="主舞 / 歌唱" data-desc="Yuma，擅長舞蹈與舞台表演。">
-          <div class="thumb"><img src="https://via.placeholder.com/400x300?text=Yuma" alt="Yuma"></div>
-          <div class="meta">
-            <div>
-              <div class="name">Yuma</div>
-              <div class="role">主舞</div>
-            </div>
-            <div style="font-size:12px;color:var(--muted)">點擊看詳情</div>
-          </div>
-        </div>
-
-        <div class="card" data-name="Jo" data-role="主唱 / 表演" data-desc="Jo，具魅力的歌唱與舞台能量。">
-          <div class="thumb"><img src="https://via.placeholder.com/400x300?text=Jo" alt="Jo"></div>
-          <div class="meta">
-            <div>
-              <div class="name">Jo</div>
-              <div class="role">主唱</div>
-            </div>
-            <div style="font-size:12px;color:var(--muted)">點擊看詳情</div>
-          </div>
-        </div>
-
-        <div class="card" data-name="Harua" data-role="主唱 / 視覺" data-desc="Harua，以溫柔嗓音與舞台形象著稱。">
-          <div class="thumb"><img src="https://via.placeholder.com/400x300?text=Harua" alt="Harua"></div>
-          <div class="meta">
-            <div>
-              <div class="name">Harua</div>
-              <div class="role">主唱 / 視覺</div>
-            </div>
-            <div style="font-size:12px;color:var(--muted)">點擊看詳情</div>
-          </div>
-        </div>
-
-        <div class="card" data-name="Taki" data-role="Rap / 表演" data-desc="Taki，擅長 Rap 與舞台節奏控制。">
-          <div class="thumb"><img src="https://via.placeholder.com/400x300?text=Taki" alt="Taki"></div>
-          <div class="meta">
-            <div>
-              <div class="name">Taki</div>
-              <div class="role">Rap</div>
-            </div>
-            <div style="font-size:12px;color:var(--muted)">點擊看詳情</div>
-          </div>
-        </div>
-
-        <div class="card" data-name="Maki" data-role="主唱 / 多才" data-desc="Maki，團體中表現穩定，音樂多面向嘗試。">
-          <div class="thumb"><img src="https://via.placeholder.com/400x300?text=Maki" alt="Maki"></div>
-          <div class="meta">
-            <div>
-              <div class="name">Maki</div>
-              <div class="role">主唱</div>
-            </div>
-            <div style="font-size:12px;color:var(--muted)">點擊看詳情</div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- MUSIC -->
-    <section aria-labelledby="music">
-      <h2 id="music">精選音樂 / 視頻</h2>
-      <div class="music-list">
-        <div class="music-item">
-          <img src="https://via.placeholder.com/160x90?text=Under+the+Skin" alt="Under the Skin">
-          <div>
-            <div style="font-weight:700">Under the Skin</div>
-            <div style="color:var(--muted);font-size:13px">出道單曲（2022） — 可嵌入 YouTube 影片或 Spotify 連結</div>
-          </div>
-          <div style="margin-left:auto">
-            <a class="btn" href="https://www.youtube.com/results?search_query=%26TEAM+Under+the+Skin" target="_blank" rel="noopener">觀看 MV</a>
-          </div>
-        </div>
-
-        <div class="music-item">
-          <img src="https://via.placeholder.com/160x90?text=First+Howling" alt="First Howling">
-          <div>
-            <div style="font-weight:700">First Howling : ME (EP)</div>
-            <div style="color:var(--muted);font-size:13px">首張迷你專輯（2022）</div>
-          </div>
-          <div style="margin-left:auto">
-            <a class="ghost" href="https://www.andteam-official.jp/" target="_blank" rel="noopener">更多作品</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- 嵌入影片範例 -->
-      <div style="margin-top:12px">
-        <h3 style="font-size:16px;margin:6px 0">官方影片（示例嵌入）</h3>
-        <div style="position:relative;padding-top:56.25%;background:rgba(0,0,0,0.25);border-radius:10px;overflow:hidden">
-          <!-- 若要替換為官方影片，將 src 的影片 ID 換成官方 YouTube ID -->
-          <iframe src="https://www.youtube.com/embed/?listType=search&list=%26TEAM+Under+the+Skin" title="&TEAM MV" style="position:absolute;inset:0;border:0;width:100%;height:100%" allowfullscreen></iframe>
-        </div>
-      </div>
-    </section>
-
-    <!-- LINKS -->
-    <section aria-labelledby="links">
-      <h2 id="links">官方連結</h2>
-      <ul style="color:var(--muted);line-height:1.8">
-        <li>官方網站：<a href="https://www.andteam-official.jp/" target="_blank" rel="noopener">andteam-official.jp</a></li>
-        <li>YouTube（官方頻道）：<a href="https://www.youtube.com/channel/UCHD1jo5RhijLfx5-0Ehe_cg" target="_blank" rel="noopener">觀看影片</a></li>
-        <li>Instagram：<a href="https://www.instagram.com/andteam_official/" target="_blank" rel="noopener">@andteam_official</a></li>
-      </ul>
-    </section>
-
-    <footer>
-      <div>此頁範本僅供展示與學習使用。圖像請使用官方授權或自行拍攝之素材。資料參考：維基百科、官方網站與新聞報導等。</div>
-    </footer>
+  <!-- 商品 1 -->
+  <div class="card">
+    <img src="https://illust8.com/wp-content/uploads/2021/02/cookie_choco_chip_illust_1159.png" alt="巧克力豆餅乾">
+    <h3>巧克力豆餅乾</h3>
+    <p class="price">NT$ 120 / 6片</p>
+    <a href="#" class="buy-btn">加入購物車</a>
   </div>
 
-  <!-- Modal for member detail -->
-  <div id="modal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modalTitle">
-    <div class="modal-card" role="document">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <h3 id="modalTitle" style="margin:0">成員名稱</h3>
-        <button class="close" id="modalClose">關閉 ✕</button>
-      </div>
-      <div class="modal-grid">
-        <div style="min-height:120px;overflow:hidden;border-radius:8px">
-          <img id="modalImg" src="https://via.placeholder.com/300x300?text=Member+Photo" alt="">
-        </div>
-        <div>
-          <p id="modalRole" style="color:var(--muted);margin:6px 0">職務 / 特色</p>
-          <p id="modalDesc" style="margin-top:10px;color:#cfeffd">成員介紹說明區塊（可放生日、出身、代表作、社群連結等）。</p>
-        </div>
-      </div>
-    </div>
+  <!-- 商品 2 -->
+  <div class="card">
+    <img src="https://illust8.com/wp-content/uploads/2021/02/cookie_butter_illust_1160.png" alt="奶油餅乾">
+    <h3>奶油香酥餅乾</h3>
+    <p class="price">NT$ 110 / 6片</p>
+    <a href="#" class="buy-btn">加入購物車</a>
   </div>
 
-  <script>
-    // 簡單互動：點擊成員卡開 Modal（資料由 data-* 讀取）
-    (function(){
-      const grid = document.getElementById('membersGrid');
-      const modal = document.getElementById('modal');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalRole = document.getElementById('modalRole');
-      const modalDesc = document.getElementById('modalDesc');
-      const modalImg = document.getElementById('modalImg');
-      const modalClose = document.getElementById('modalClose');
+  <!-- 商品 3 -->
+  <div class="card">
+    <img src="https://illust8.com/wp-content/uploads/2021/02/cookie_cats_tongue_illust_1161.png" alt="貓舌餅">
+    <h3>手工貓舌餅</h3>
+    <p class="price">NT$ 140 / 10片</p>
+    <a href="#" class="buy-btn">加入購物車</a>
+  </div>
 
-      grid.addEventListener('click', e=>{
-        // 找到父層 card
-        let card = e.target;
-        while(card && !card.classList.contains('card')) card = card.parentElement;
-        if(!card) return;
-        const name = card.dataset.name || '成員';
-        const role = card.dataset.role || '';
-        const desc = card.dataset.desc || '';
-        const img = card.querySelector('img') ? card.querySelector('img').src : 'https://via.placeholder.com/300x300?text=Member';
+  <!-- 商品 4 -->
+  <div class="card">
+    <img src="https://illust8.com/wp-content/uploads/2021/02/cookie_sable_illust_1162.png" alt="沙布列餅">
+    <h3>法式沙布列餅</h3>
+    <p class="price">NT$ 160 / 8片</p>
+    <a href="#" class="buy-btn">加入購物車</a>
+  </div>
 
-        modalTitle.textContent = name;
-        modalRole.textContent = role;
-        modalDesc.textContent = desc;
-        modalImg.src = img;
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden','false');
-      });
+</section>
 
-      modalClose.addEventListener('click', ()=> {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden','true');
-      });
+<section class="contact">
+  <h2>聯絡我們</h2>
+  <p>📍 台北市幸福區甜點路 88 號</p>
+  <p>📞 02-1234-5678</p>
+  <p>📧 cookie@happybakery.com</p>
+  <p>🕒 營業時間：11:00 – 19:00（週一公休）</p>
+</section>
 
-      // 點擊背景也會關閉
-      modal.addEventListener('click', (ev)=>{
-        if(ev.target === modal){
-          modal.classList.remove('open');
-          modal.setAttribute('aria-hidden','true');
-        }
-      });
+<footer>
+  © 2025 幸福手作餅乾工坊｜本網站圖示取自いらすとや（可商用）
+</footer>
 
-      // Esc 可關閉
-      window.addEventListener('keydown', (ev)=>{
-        if(ev.key === 'Escape' && modal.classList.contains('open')){
-          modal.classList.remove('open');
-          modal.setAttribute('aria-hidden','true');
-        }
-      });
-    })();
-  </script>
 </body>
 </html>
-
