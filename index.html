@@ -256,8 +256,8 @@
 
         // 星星移動與方向
         const time = now * star.rotateSpeed + star.angleOffset;
-        star.dx = Math.cos(star.baseAngle + Math.sin(time) * 0.45) * 0.55;  // 更快
-        star.dy = Math.sin(star.baseAngle + Math.cos(time) * 0.45) * 0.45;  // 更快
+        star.dx = Math.cos(star.baseAngle + Math.sin(time) * 0.65) * 0.55;  // 更快
+        star.dy = Math.sin(star.baseAngle + Math.cos(time) * 0.65) * 0.45;  // 更快
         star.x += star.dx;
         star.y += star.dy;
         star.rotation += star.rotationSpeed;
