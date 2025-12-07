@@ -18,7 +18,7 @@
             padding: 0;
             font-family: 'Zen Maru Gothic', sans-serif;
             background-color: var(--mizuiro-light);
-            /* 背景：格子紋路 */
+           /* 背景：格子紋路 */
             background-image: 
                 linear-gradient(rgba(137, 207, 240, 0.2) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(137, 207, 240, 0.2) 1px, transparent 1px);
@@ -30,6 +30,20 @@
             align-items: flex-start;
             padding-top: 40px;
             padding-bottom: 40px;
+            overflow-x: hidden; /* 防止星星超出寬度產生卷軸 */
+        }
+
+        /* --- 背景星海畫布 (新增) --- */
+        #star-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* 放在最底層 */
+            pointer-events: none; /* 讓滑鼠可以穿透它點擊內容 */
+        }
+
         }
 
         .container {
