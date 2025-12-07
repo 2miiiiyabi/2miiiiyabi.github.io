@@ -430,6 +430,83 @@ a:hover, button:hover, .link-btn:hover, .tab-btn:hover {
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
         }
+         // --- 2. 星海堆積特效邏輯 (Star Sea) ---
+        const canvas = document.getElementById('star-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+        let pileHeights = []; // 紀錄每個 x 座標目前的堆積高度
+        const particleSize = 8; // 星星大小 (像素)
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            // 初始化地面高度 (剛開始都是 0，也就是在畫面最底部)
+            pileHeights = new Array(Math.ceil(width / particleSize)).fill(0);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.floor(Math.random() * (width / particleSize)) * particleSize; // 對齊網格
+                this.y = -10; // 從頂部上方開始
+                this.speed = Math.random() * 3 + 2; // 下落速度
+                this.color = Math.random() > 0.5 ? '#89CFF0' : '#FFFFFF'; // 藍色或白色
+                this.stopped = false;
+            }
+
+            update() {
+                if (this.stopped) return;
+
+                this.y += this.speed;
+
+                // 計算它現在在哪一個 "柱子" (Column)
+                const colIndex = Math.floor(this.x / particleSize);
+                // 取得該柱子目前已經堆多高了
+                const currentPileHeight = pileHeights[colIndex];
+
+                // 碰撞檢測：如果掉到地面 (height) 減去 堆積高度
+                if (this.y >= height - currentPileHeight - particleSize) {
+                    this.y = height - currentPileHeight - particleSize;
+                    this.stopped = true;
+                    // 增加該柱子的高度
+                    pileHeights[colIndex] += particleSize;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, particleSize - 1, particleSize - 1); // -1 是為了留一點小縫隙，更有像素感
+            }
+        }
+
+        function animate() {
+            // 清除畫布 (只清除移動中的星星，堆積的可以重繪)
+            // 這裡為了簡單，我們每幀重繪所有星星 (效能對現代電腦沒問題)
+            ctx.clearRect(0, 0, width, height);
+
+            // 隨機產生新星星
+            if (Math.random() < 0.2) { // 調整這個數字改變生成頻率
+                particles.push(new Particle());
+            }
+
+            // 更新並繪製所有星星
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+
+            // 如果星星太多 (例如堆滿了)，可以考慮移除舊的，目前先保留呈現 "累積" 感
+            // 為了不讓陣列無限膨脹，我們可以移除那些已經被埋在很下面的星星，但在這裡我們先保持簡單。
+            
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
     </script>
 </body>
 </html>
