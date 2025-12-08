@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Miyabi's Webside ⊹˚. ♡</title>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
             --mizuiro-main: #89CFF0; /* 天使藍 */
-            --mizuiro-light: #E0F6FF; /* 淺水色 */
+            --mizuiro-dark: #5FA8CC;
+            --mizuiro-light: #E0F6FF;
             --white: #ffffff;
             --text-gray: #555;
+            --pixel-font: 'Courier New', 'VT323', monospace;
         }
 
         body {
@@ -18,7 +20,7 @@
             padding: 0;
             font-family: 'Zen Maru Gothic', sans-serif;
             background-color: var(--mizuiro-light);
-            /* 背景：格子紋路 */
+            /* 背景：格子紋路 + 掃描線效果 */
             background-image: 
                 linear-gradient(rgba(137, 207, 240, 0.2) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(137, 207, 240, 0.2) 1px, transparent 1px);
@@ -29,52 +31,71 @@
             justify-content: center;
             align-items: flex-start;
             padding-top: 40px;
-            padding-bottom: 40px;
+            padding-bottom: 60px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 復古掃描線 CRT Effect */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+            z-index: 999;
         }
 
         .container {
             width: 90%;
             max-width: 480px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(5px);
             border-radius: 30px;
-            border: 4px solid var(--white);
+            border: 3px solid var(--white);
+            outline: 2px dashed var(--mizuiro-main); /* Y2K 虛線邊框 */
             box-shadow: 
-                0 0 20px rgba(137, 207, 240, 0.4),
+                0 0 25px rgba(137, 207, 240, 0.5),
                 inset 0 0 20px rgba(255, 255, 255, 0.8);
             padding: 25px;
             position: relative;
-            overflow: hidden;
+            z-index: 10;
         }
 
         /* 頂部蕾絲 */
         .lace-top {
             position: absolute;
-            top: 0;
+            top: -10px;
             left: 0;
             width: 100%;
-            height: 15px;
-            background-image: radial-gradient(circle, var(--white) 50%, transparent 60%);
-            background-size: 20px 20px;
-            background-position: top center;
+            height: 20px;
+            background: radial-gradient(circle, white 8px, transparent 9px);
+            background-size: 24px 24px;
+            background-position: bottom center;
+            z-index: 2;
         }
 
         /* ASCII 區塊 */
         .ascii-art-box {
             background: #f0faff;
-            border: 2px dashed var(--mizuiro-main);
-            border-radius: 15px;
+            border: 2px solid var(--mizuiro-main);
+            border-radius: 10px;
             padding: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             overflow-x: auto;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
+            box-shadow: 4px 4px 0px #bce6ff; /* 像素陰影 */
         }
 
         .ascii-art-content {
-            font-family: 'Courier New', monospace;
+            font-family: var(--pixel-font);
             font-size: 6px;
             line-height: 6px;
             white-space: pre;
@@ -86,13 +107,88 @@
         
         .ascii-tag {
             position: absolute;
-            bottom: 5px;
+            bottom: -8px;
             right: 10px;
-            font-size: 0.7rem;
+            font-family: var(--pixel-font);
+            font-size: 0.8rem;
             background: var(--mizuiro-main);
             color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 2px 8px;
+            border: 2px solid white;
+            transform: rotate(-5deg);
+        }
+
+        /* 天氣小工具樣式 (Shoufeng Weather) */
+        .weather-widget {
+            background: linear-gradient(135deg, #e3fdfd 0%, #ffe6fa 100%);
+            border: 2px dashed var(--mizuiro-dark);
+            border-radius: 20px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .weather-widget:active {
+            transform: scale(0.98);
+        }
+
+        .weather-info {
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+        }
+
+        .location-tag {
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: var(--mizuiro-dark);
+            background: rgba(255,255,255,0.7);
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 2px;
+            font-family: var(--pixel-font);
+            letter-spacing: 1px;
+        }
+
+        .temp-display {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--mizuiro-main);
+            text-shadow: 2px 2px 0px white;
+            font-family: var(--pixel-font);
+        }
+
+        .weather-icon-box {
+            font-size: 2rem;
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--mizuiro-main);
+            box-shadow: 2px 2px 0px rgba(137, 207, 240, 0.5);
+            animation: bounce 2s infinite ease-in-out;
+            z-index: 2;
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: 2px;
+            right: 5px;
+            font-size: 0.6rem;
+            color: #aaa;
+            font-family: var(--pixel-font);
+            animation: blink 1.5s infinite;
         }
 
         /* 個人資訊 */
@@ -103,9 +199,10 @@
 
         h1 {
             color: var(--mizuiro-main);
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             margin: 5px 0;
-            text-shadow: 2px 2px 0 #fff;
+            text-shadow: 2px 2px 0 #fff, 4px 4px 0px rgba(137, 207, 240, 0.3);
+            font-style: italic;
         }
 
         .bio-tags {
@@ -120,10 +217,13 @@
             background: var(--white);
             border: 1px solid var(--mizuiro-main);
             color: var(--mizuiro-main);
-            padding: 3px 10px;
+            padding: 3px 12px;
             border-radius: 15px;
-            box-shadow: 2px 2px 0 #eef;
+            box-shadow: 3px 3px 0 #dcedf7;
+            transition: transform 0.2s;
         }
+        
+        .tag:hover { transform: translateY(-2px); }
 
         /* 導覽列 */
         .nav-tabs {
@@ -131,16 +231,16 @@
             justify-content: space-between;
             margin-bottom: 20px;
             background: #fff;
-            padding: 5px;
+            padding: 6px;
             border-radius: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 2px solid #eee;
         }
 
         .tab-btn {
             flex: 1;
             border: none;
             background: transparent;
-            padding: 10px 0;
+            padding: 8px 0;
             font-family: 'Zen Maru Gothic';
             font-weight: bold;
             color: #ccc;
@@ -154,6 +254,7 @@
             background: var(--mizuiro-main);
             color: var(--white);
             box-shadow: 0 4px 10px rgba(137, 207, 240, 0.4);
+            transform: scale(1.05);
         }
 
         .content-box { min-height: 250px; }
@@ -168,23 +269,29 @@
         .stylish-list { list-style: none; padding: 0; }
         .stylish-list li {
             background: var(--white);
-            margin-bottom: 15px; /* 加大間距放音樂播放器 */
+            margin-bottom: 15px;
             padding: 12px;
             border-radius: 12px;
+            border: 2px solid transparent;
             border-left: 5px solid var(--mizuiro-main);
             box-shadow: 3px 3px 10px rgba(0,0,0,0.03);
-            display: flex;
-            flex-direction: column;
+            transition: all 0.2s;
+        }
+        
+        .stylish-list li:hover {
+            border-color: var(--mizuiro-light);
+            transform: translateX(5px);
         }
 
         .stylish-list .date {
-            font-size: 0.8rem;
+            font-family: var(--pixel-font);
+            font-size: 1rem;
             color: var(--mizuiro-main);
             font-weight: bold;
             margin-bottom: 4px;
+            display: block;
         }
 
-        /* 音樂播放器樣式 */
         .spotify-embed {
             margin-top: 10px;
             border-radius: 12px;
@@ -192,7 +299,6 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        /* 連結按鈕樣式 */
         .link-btn {
             display: flex;
             align-items: center;
@@ -200,51 +306,110 @@
             width: 100%;
             padding: 12px;
             margin-bottom: 10px;
-            border: 1px solid var(--mizuiro-main);
+            border: 2px solid var(--mizuiro-main);
             background: white;
             color: var(--mizuiro-main);
             border-radius: 30px;
             font-family: inherit;
-            text-decoration: none; /* 去除底線 */
+            text-decoration: none;
             font-weight: bold;
             transition: all 0.2s;
-            box-sizing: border-box; /* 確保 padding 不會撐爆寬度 */
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
         }
 
         .link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(137, 207, 240, 0.3);
+            background: var(--mizuiro-main);
+            color: white;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+            transform: translate(-2px, -2px);
         }
+        
+        .link-btn::after {
+            content: '➜';
+            position: absolute;
+            right: 15px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .link-btn:hover::after { opacity: 1; }
 
         .link-btn.primary {
             background: var(--mizuiro-main);
             color: white;
-            border: none;
+            border: 2px solid var(--mizuiro-main);
+        }
+        .link-btn.primary:hover {
+            background: #7bbddf;
+            border-color: #7bbddf;
         }
 
-        .deco { position: absolute; pointer-events: none; z-index: 10; }
-        .d2 { bottom: 10px; left: -10px; font-size: 2rem; transform: rotate(-15deg); }
         .section-title {
             text-align: center;
             color: var(--mizuiro-main);
-            border-bottom: 1px dashed var(--mizuiro-main);
+            border-bottom: 2px dashed var(--mizuiro-main);
             padding-bottom: 5px;
             margin-bottom: 15px;
+            font-weight: 900;
         }
         .highlight-text {
             background: linear-gradient(180deg, rgba(255,255,255,0) 60%, #bce6ff 60%);
             display: inline-block;
         }
-        /* --- 像素風天使翅膀鼠標 (Pixel Angel Wing Cursor) --- */
-body, 
 
-/* 當滑鼠移到可點擊的東西上時，變成另一種可愛圖示 (例如愛心) */
-a:hover, button:hover, .link-btn:hover, .tab-btn:hover {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" style="shape-rendering:crispEdges"><path fill="%2389CFF0" stroke="%23ffffff" stroke-width="2" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, pointer;
-}
+        /* --- Y2K 貼紙與背景特效 --- */
+        .bg-sticker {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* 閃爍動畫 */
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        /* 浮動動畫 */
+        @keyframes float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(5deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        /* 彈跳 */
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        /* 滑鼠樣式 */
+        body, a, button {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" style="shape-rendering:crispEdges"><path fill="%2389CFF0" stroke="%23ffffff" stroke-width="2" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto;
+        }
+        a:hover, button:hover {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><text y="20" font-size="20">👆</text></svg>') 12 12, pointer;
+        }
+
+        /* 跑馬燈 */
+        .marquee-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--mizuiro-main);
+            color: white;
+            padding: 5px 0;
+            font-family: var(--pixel-font);
+            font-size: 14px;
+            z-index: 100;
+            border-top: 2px solid white;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Y2K 背景貼紙 -->
+    <div class="bg-sticker" style="top: 10%; left: 5%; font-size: 3rem;">✨</div>
+    <div class="bg-sticker" style="top: 20%; right: 10%; font-size: 2rem; animation-delay: 1s;">☁️</div>
+    <div class="bg-sticker" style="bottom: 15%; left: 8%; font-size: 2.5rem; animation-delay: 2s;">💿</div>
+    <div class="bg-sticker" style="top: 50%; right: 5%; font-size: 4rem; opacity: 0.3; transform: rotate(15deg);">✧</div>
+    <div class="bg-sticker" style="top: 80%; left: 80%; font-size: 1.5rem;">🦋</div>
+    
+    <!-- 像素裝飾 svg -->
+    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%2389CFF0'><path d='M50 0L61 35L98 35L68 57L79 91L50 70L21 91L32 57L2 35L39 35Z'/></svg>" class="bg-sticker" style="width: 50px; top: 15%; left: 85%; animation-duration: 4s;">
 
     <div class="container">
         
@@ -288,11 +453,24 @@ a:hover, button:hover, .link-btn:hover, .tab-btn:hover {
             <div class="ascii-tag">SYSTEM.OP</div>
         </div>
 
+        <!-- 互動式天氣小工具 -->
+        <div class="weather-widget" onclick="toggleWeather()" title="點我查看詳情!">
+            <div class="weather-info">
+                <span class="location-tag">📍 Hualien, Shoufeng</span>
+                <span id="temp-text" class="temp-display">Loading..</span>
+                <span id="weather-desc" style="font-size:0.8rem; color:#777; margin-top:2px;">正在連線衛星...</span>
+            </div>
+            <div class="weather-icon-box">
+                <span id="weather-emoji">🛰️</span>
+            </div>
+            <div class="click-hint">CLICK ME!</div>
+        </div>
+
         <div class="profile-section">
             <h1>MIYABI張雅筑 ⊹˚.</h1>
             <div class="bio-tags">
-                <span class="tag">東華大學 🌊</span>
-                <span class="tag">資管系 IM</span>
+                <span class="tag">NDHU 東華大學 🌊</span>
+                <span class="tag">IM 資管系 💻</span>
             </div>
             <p style="font-size: 0.9rem; margin-top: 10px; color: #777;">
                 ꒰ 喜歡音樂，喜歡 Jpop ꒱ <br>
@@ -318,7 +496,7 @@ a:hover, button:hover, .link-btn:hover, .tab-btn:hover {
                         是標準的 <span class="highlight-text">藍色</span> 愛好者。<br>
                         目前的小目標是想去日本獨旅。
                     </p>
-                    <div style="text-align: center; font-size: 1.5rem; margin-top: 10px;">
+                    <div style="text-align: center; font-size: 1.5rem; margin-top: 10px; letter-spacing: 5px;">
                         🎧 💿 🌐
                     </div>
                 </div>
@@ -351,8 +529,8 @@ a:hover, button:hover, .link-btn:hover, .tab-btn:hover {
                         <iframe class="spotify-embed" style="border-radius:12px" src="https://open.spotify.com/embed/track/6NZDXzAaFg2DJO1rfs0xWX?si=fd612a41a50b4fa5" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                     </li>
                 </ul>
-                <div style="text-align: right; font-size: 0.8rem; color: #aaa;">
-                    Next Live... Loading
+                <div style="text-align: right; font-size: 0.8rem; color: #aaa; font-family: var(--pixel-font);">
+                    Next Live... Loading [|||||| ]
                 </div>
             </div>
 
@@ -375,8 +553,13 @@ a:hover, button:hover, .link-btn:hover, .tab-btn:hover {
 
         </div>
 
-        <div class="deco d2">🦋</div>
+    </div>
 
+    <!-- 底部跑馬燈 -->
+    <div class="marquee-container">
+        <marquee scrollamount="5">
+            WELCOME TO MIYABI'S WORLD ☁️ LISTENING TO MUSIC 24/7 ☁️ DON'T FORGET TO DRINK WATER ☁️ HAVE A NICE DAY! 
+        </marquee>
     </div>
 
     <script>
@@ -390,6 +573,81 @@ a:hover, button:hover, .link-btn:hover, .tab-btn:hover {
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
         }
+
+        // --- 壽豐天氣邏輯 ---
+        let weatherState = 0; // 0: 溫度, 1: 濕度/詳情
+        let currentTemp = "--";
+        let weatherCode = 0;
+
+        async function fetchWeather() {
+            // 壽豐鄉座標: 23.8698, 121.5067
+            const url = "https://api.open-meteo.com/v1/forecast?latitude=23.8698&longitude=121.5067&current=temperature_2m,weather_code,is_day&timezone=Asia%2FTaipei";
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                currentTemp = Math.round(data.current.temperature_2m);
+                weatherCode = data.current.weather_code;
+                const isDay = data.current.is_day;
+
+                updateWeatherUI(currentTemp, weatherCode, isDay);
+            } catch (error) {
+                console.error("Weather fetch failed", error);
+                document.getElementById('temp-text').innerText = "Err";
+                document.getElementById('weather-desc').innerText = "連線失敗";
+            }
+        }
+
+        function getWeatherIcon(code, isDay) {
+            // 簡單的 WMO Code 轉換
+            if (code === 0) return isDay ? "☀️" : "🌙";
+            if (code >= 1 && code <= 3) return isDay ? "⛅" : "☁️";
+            if (code >= 45 && code <= 48) return "🌫️";
+            if (code >= 51 && code <= 67) return "🌧️";
+            if (code >= 80 && code <= 99) return "⛈️";
+            return "🛸";
+        }
+
+        function getWeatherDesc(code) {
+            if (code === 0) return "晴朗好天氣!";
+            if (code <= 3) return "多雲時晴";
+            if (code <= 48) return "霧霧的";
+            if (code <= 67) return "記得帶傘喔";
+            if (code <= 99) return "雷雨注意!";
+            return "未知天氣";
+        }
+
+        function updateWeatherUI(temp, code, isDay) {
+            const icon = getWeatherIcon(code, isDay);
+            const desc = getWeatherDesc(code);
+
+            document.getElementById('temp-text').innerText = `${temp}°C`;
+            document.getElementById('weather-emoji').innerText = icon;
+            document.getElementById('weather-desc').innerText = desc;
+        }
+
+        function toggleWeather() {
+            const tempText = document.getElementById('temp-text');
+            const descText = document.getElementById('weather-desc');
+
+            if (weatherState === 0) {
+                // 切換成心情模式
+                tempText.style.fontSize = "1.2rem";
+                tempText.innerText = "Have a";
+                descText.innerText = "Nice Day! ♡";
+                weatherState = 1;
+            } else {
+                // 切換回天氣模式
+                tempText.style.fontSize = "1.8rem";
+                tempText.innerText = `${currentTemp}°C`;
+                descText.innerText = getWeatherDesc(weatherCode);
+                weatherState = 0;
+            }
+        }
+
+        // 頁面載入時抓取天氣
+        fetchWeather();
     </script>
 </body>
 </html>
